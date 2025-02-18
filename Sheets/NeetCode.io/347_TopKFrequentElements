@@ -1,0 +1,40 @@
+// 347. Top K Frequent Elements 
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        
+        // Step 1 : Storing frequency in map
+        unordered_map<int, int> mp;
+        for(auto &num : nums){
+            mp[num]++;
+        }
+
+        //Step 2 : Creating a vector in which each index represents the frequency and the nums with that frequency occurence are stored in that particular index
+        vector<vector<int>> bucket (nums.size()+1);
+        for(auto &it : mp){
+            int element = it.first;
+            int frequency = it.second;
+
+            bucket[frequency].push_back(element);
+        }
+        
+
+        // Step 3 : Returning result
+        vector<int> result;
+        for(int i = nums.size(); i >= 0; i--){
+            if (bucket[i].size() == 0){
+                continue;
+            }
+            while(bucket[i].size() != 0 && k > 0){
+                result.push_back(bucket[i].back());
+                bucket[i].pop_back();
+                k--;
+            }
+        }
+        return result;
+    }
+};
+
+// Time Complexity : O(N)
+// Space Complexity : O(N)
