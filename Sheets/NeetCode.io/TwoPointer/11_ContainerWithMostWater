@@ -1,0 +1,29 @@
+// 11. Container With Most Water
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int start = 0;
+        int end = height.size() - 1;
+
+        int maxStorage = 0;
+
+        while(start < end){
+            int h = min(height[start], height[end]);
+            int w = end - start;
+            int storage = h * w;
+            maxStorage = max(maxStorage, storage);
+
+            if (h == height[start]){
+                start++;
+            }else{
+                end--;
+            }
+
+        }
+        return maxStorage;   
+    }
+};
+
+// Time Complexity : O(N)
+// Space Complexity : O(1)
