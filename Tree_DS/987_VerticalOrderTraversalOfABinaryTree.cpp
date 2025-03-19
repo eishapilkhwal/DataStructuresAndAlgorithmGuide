@@ -13,33 +13,43 @@
  */
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        vector<vector<int>> result;
-        
-        if (root == nullptr){
-            return result;
-        }
-       
-        queue<TreeNode*> q;
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        // col -> vertical
+        // row -> level
 
-        q.push(root);
+        TreeNode* node = root;
+        queue<pair<TreeNode*, pair<int, int>>> q; // queue<pair<node, pair<col, row>>>
+        map<int, map<int, multiset<int>>> mp;  // map<col, map<row, multiset<node>>>
 
+        q.push({node, {0, 0}});
         while(!q.empty()){
-            int size = q.size();
-            vector<int> level;
-            for(int i = 0; i < size; i++){
-                TreeNode* node = q.front();
-                q.pop();
-                if(node->left != nullptr)
-                    q.push(node->left);
-                if(node->right != nullptr)
-                    q.push(node->right);
-                level.push_back(node->val);
+            auto p = q.front();
+            TreeNode* temp = p.first;
+            int row = p.second.first;
+            int col = p.second.second;
+            q.pop();
+            mp[col][row].insert(temp->val);
+
+            if (temp->left != nullptr){
+                q.push({temp->left, {row + 1, col - 1}});
             }
-            result.push_back(level);
+            if (temp->right != nullptr){
+                q.push({temp->right, {row + 1, col + 1}});
+            }
+            
+        }
+
+        vector<vector<int>> result;
+        for(auto& x : mp){
+            vector<int> columnWise;
+            for(auto& y : x.second){
+                columnWise.insert(columnWise.end(), y.second.begin(), y.second.end());
+            }
+            result.push_back(columnWise);
         }
 
         return result;
+
     }
 };
 
