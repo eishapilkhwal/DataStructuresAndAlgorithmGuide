@@ -45,5 +45,5 @@ public:
     }
 };
 
-// Time Complexity : 
-// Space Compelxity : 
+// Time Complexity : O(N)
+// Space Compelxity : O(N)
