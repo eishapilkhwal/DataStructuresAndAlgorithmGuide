@@ -80,3 +80,32 @@ public:
         return count;
     }
 };
+
+
+// Using DFS, adjacency matrix
+
+class Solution {
+public:
+    void dfs(int node, vector<vector<int>>& adjLst, vector<int>& visited) {
+        visited[node] = 1;
+        for(int i = 0; i < adjLst[node].size(); i++){
+            if(!visited[i] && adjLst[node][i] == 1){
+                dfs(i, adjLst, visited);
+            }
+        }
+    }
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = isConnected.size();
+
+        vector<int> visited(n+1, 0);
+
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                count++;
+                dfs(i, isConnected, visited);
+            }
+        }
+        return count;
+    }
+};
