@@ -1,4 +1,4 @@
-// Detect cycle in an undirected graph usin BFS
+// Detect cycle in an undirected graph using BFS
 
 class Solution {
 private:
